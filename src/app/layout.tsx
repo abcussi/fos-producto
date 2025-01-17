@@ -5,7 +5,7 @@ import { ReactNode } from "react";
 import { GlobalStyles } from "./global-styles";
 import { ThemeProvider } from "styled-components";
 import { theme } from "@/app/styles/theme";
-import { ProductProvider } from "../app/context/ProductConext";
+import { ProductProvider } from "./context/ProductContext";
 import { AuthProvider } from "./context/authContext";
 import Header from "./components/Header/Header";
 

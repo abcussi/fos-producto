@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { useProducts } from './context/ProductConext';
+import { useProducts } from './context/ProductContext';
 import { useAuth } from './context/authContext';
 import { Product } from './types/product';
 import Modal from './components/Modal/Modal';
@@ -35,25 +35,21 @@ const ProductList: React.FC = () => {
     setIsModalOpen(true);
   };
 
-  const handleSubmit = async (data: Partial<Product>) => {
+  const handleSubmit = async (data: any) => {
     try {
       if (selectedProduct) {
         await fetch(`/api/products?id=${selectedProduct.id}`, {
           method: "PATCH",
           headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
-          body: JSON.stringify(data),
+          body:data,
         });
       } else {
         await fetch("/api/products", {
           method: "POST",
           headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
-          body: JSON.stringify(data),
+          body: data,
         });
       }
       refreshProducts();
