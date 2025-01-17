@@ -1,0 +1,15 @@
+[
+    {
+      "id": "1",
+      "name": "Product 1",
+      "description": "This is product 1",
+      "price": 100,
+      "category": "Electronics",
+      "images": ["/images/product1.png"],
+      "sellerId": "seller1",
+      "condominium": "A1",
+      "createdAt": "2023-01-01T00:00:00.000Z",
+      "updatedAt": "2023-01-01T00:00:00.000Z"
+    }
+  ]
+  
