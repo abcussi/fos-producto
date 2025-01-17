@@ -34,10 +34,6 @@ const Header: React.FC = () => {
               <Button onClick={logout} variant="warn">
                 Cerrar Sesión
               </Button>
-              <Button onClick={logout} variant="primary">
-                <Plus size={20} />
-                Adicionar Producto
-              </Button>
             </div>
           )}
         </div>
