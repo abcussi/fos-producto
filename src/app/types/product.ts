@@ -31,3 +31,9 @@ export interface Product {
     deleteProduct: (id: string) => Promise<void>;
     refreshProducts: () => Promise<void>;
   }
+  export interface ProductCardProps {
+    product: Product;
+    onEdit: (product: Product) => void;
+    onDelete: (id: string) => void;
+    className?: string; // Para permitir estilos adicionales si es necesario
+  }

@@ -10,7 +10,8 @@ module.exports = {
     extend: {
       colors: {
         condatyGreen: '#00e38c',
-        condatyBlue: '#1C65F2'
+        condatyBlue: '#1C65F2',
+        condatyHeader: '#13332b',
       },
     },
   },
