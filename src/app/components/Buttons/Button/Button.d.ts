@@ -3,7 +3,8 @@ export type ButtonVariant =
   | 'secondary'
   | 'white'
   | 'transparent'
-  | 'blue';
+  | 'blue'
+  | 'warn';
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   onClick: () => void;
