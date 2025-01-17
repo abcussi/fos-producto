@@ -35,5 +35,6 @@ export interface Product {
     product: Product;
     onEdit: (product: Product) => void;
     onDelete: (id: string) => void;
-    className?: string; // Para permitir estilos adicionales si es necesario
+    isAuthenticated: boolean;
+    className?: string;
   }
