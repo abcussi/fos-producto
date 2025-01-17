@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 import jwt from 'jsonwebtoken';
 import fs from 'fs/promises';
 import path from 'path';
-import { cookies } from 'next/headers';
+import Cookies from 'js-cookie';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
 
@@ -33,13 +33,11 @@ export async function POST(request: Request) {
       { expiresIn: '24h' }
     );
 
-    const cookieStore = await cookies();
-    cookieStore.set('token', token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict',
-      maxAge: 60 * 60 * 1, 
+    Cookies.set('token', token, {
+      expires: 7,
       path: '/',
+      secure: process.env.NODE_ENV === 'production', // solo HTTPS en producción
+      sameSite: 'strict'
     });
 
     return NextResponse.json({
