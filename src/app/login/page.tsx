@@ -1,102 +1,123 @@
-"use client";
-import React from "react";
+'use client';
+import React, { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import styled from "styled-components";
-import { useAuth } from "@/app/hooks/useAuth";
+import { twMerge } from "tailwind-merge";
+import { useRouter } from 'next/navigation';
+import { useAuth } from "../context/authContext";
+import Link from 'next/link';
+import { Eye, EyeOff } from 'lucide-react';
 
-const ErrorMessage = styled.div`
-    color: #ff0000; /* o # */
-`;
+const Container = styled.div.attrs({
+  className: twMerge(
+    'min-h-screen w-full flex items-center justify-center bg-gradient-to-b from-[#13332b] to-transparent p-4'
+  )
+})``;
 
-const OuterContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  padding: 2rem;
-  box-sizing: border-box;
-  background-image: var(--Gradient,linear-gradient(180deg,#13332b 0,rgba(37,37,37,0) 100%));
-`;
+const Card = styled.div.attrs({
+  className: twMerge(
+    'w-full max-w-md bg-white rounded-xl shadow-lg p-8 backdrop-blur-sm bg-opacity-95'
+  )
+})``;
 
-const FormCard = styled.div`
-  width: 100%;
-  max-width: 500px;
-  background: #fff;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-  padding: 2rem;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-`;
+const Title = styled.h1.attrs({
+  className: twMerge(
+    'text-3xl font-bold text-center text-gray-800 mb-2'
+  )
+})``;
 
-const Title = styled.h1`
-  text-align: center;
-  margin: 0;
-`;
+const Subtitle = styled.p.attrs({
+  className: twMerge(
+    'text-center text-gray-600 mb-8'
+  )
+})``;
 
-const FieldsContainer = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr; 
-  gap: 1rem;
+const Form = styled.form.attrs({
+  className: twMerge(
+    'space-y-6'
+  )
+})``;
 
-  @media (max-width: 768px) {
-    grid-template-columns: 1fr;
-  }
-`;
+const InputGroup = styled.div.attrs({
+  className: twMerge(
+    'space-y-2'
+  )
+})``;
 
-const FieldWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
+const Label = styled.label.attrs({
+  className: twMerge(
+    'block text-sm font-medium text-gray-700'
+  )
+})``;
 
-  label {
-    margin-bottom: 0.25rem;
-    font-weight: 500;
-  }
+const InputWrapper = styled.div.attrs({
+  className: twMerge(
+    'relative'
+  )
+})``;
 
-  input {
-    padding: 0.5rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+const Input = styled.input.attrs({
+  className: twMerge(
+    'w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-condatyGreen focus:ring-2 focus:ring-condatyGreen/20 outline-none transition-colors'
+  )
+})``;
 
-    &:focus {
-      border-color: #00e38c;
-      outline: none;
-    }
-  }
-`;
+const IconButton = styled.button.attrs({
+  className: twMerge(
+    'absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 transition-colors'
+  )
+})``;
 
-const SubmitButton = styled.button`
-  background-color: #00e38c;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  padding: 0.75rem 1rem;
-  font-weight: bold;
-  cursor: pointer;
-  text-align: center;
-  margin-top: 0.5rem;
+const ErrorText = styled.span.attrs({
+  className: twMerge(
+    'text-sm text-red-600 flex items-center gap-1'
+  )
+})``;
 
-  &:hover {
-    opacity: 0.9;
-  }
+const Button = styled.button.attrs({
+  className: twMerge(
+    'w-full py-3 px-4 bg-condatyGreen text-white font-semibold rounded-lg hover:bg-opacity-90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2'
+  )
+})``;
 
-  &:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
-`;
+const Alert = styled.div.attrs({
+  className: twMerge(
+    'bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg'
+  )
+})``;
+
+const Footer = styled.div.attrs({
+  className: twMerge(
+    'mt-6 text-center text-sm text-gray-600'
+  )
+})``;
+
+const FooterLink = styled(Link).attrs({
+  className: twMerge(
+    'text-condatyGreen hover:text-condatyGreen/80 font-medium'
+  )
+})``;
 
 export default function LoginPage() {
-  const { login, isLoading, error } = useAuth();
+  const router = useRouter();
+  const { login, isAuthenticated } = useAuth();
+  const [showPassword, setShowPassword] = useState(false);
+  const [loginError, setLoginError] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.push('/');
+    }
+  }, [isAuthenticated, router]);
 
   const validationSchema = Yup.object({
     email: Yup.string()
       .email("Formato de email inválido")
       .required("Campo requerido"),
     password: Yup.string()
-      .min(6, 'Tiene que tener mas de 6 carcateres.')
+      .min(6, 'Tiene que tener más de 6 caracteres')
       .matches(/[a-zA-Z]/, 'Tiene que tener al menos una letra')
       .required("Campo requerido"),
   });
@@ -108,54 +129,92 @@ export default function LoginPage() {
     },
     validationSchema,
     onSubmit: async (values) => {
-      await login(values.email, values.password);
+      try {
+        setIsSubmitting(true);
+        setLoginError('');
+        await login(values.email, values.password);
+      } catch (error: any) {
+        setLoginError(error.message || 'Error al iniciar sesión');
+      } finally {
+        setIsSubmitting(false);
+      }
     },
   });
 
   return (
-    <OuterContainer>
-      <FormCard>
-        <Title>Iniciar sesión</Title>
-        <form onSubmit={formik.handleSubmit}>
-          <FieldsContainer>
-            <FieldWrapper>
-              <label htmlFor="email">Correo electrónico</label>
-              <input
+    <Container>
+      <Card>
+        <Title>¡Bienvenido!</Title>
+        <Subtitle>Inicia sesión para continuar</Subtitle>
+        
+        <Form onSubmit={formik.handleSubmit}>
+          {loginError && (
+            <Alert role="alert">
+              {loginError}
+            </Alert>
+          )}
+          
+          <InputGroup>
+            <Label htmlFor="email">
+              Correo electrónico
+            </Label>
+            <InputWrapper>
+              <Input
                 id="email"
                 type="email"
                 autoComplete="email"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.email}
+                placeholder="ejemplo@correo.com"
+                {...formik.getFieldProps('email')}
               />
-              {formik.touched.email && formik.errors.email && (
-                <ErrorMessage>{formik.errors.email}</ErrorMessage>
-              )}
-            </FieldWrapper>
+            </InputWrapper>
+            {formik.touched.email && formik.errors.email && (
+              <ErrorText>{formik.errors.email}</ErrorText>
+            )}
+          </InputGroup>
 
-            <FieldWrapper>
-              <label htmlFor="password">Contraseña</label>
-              <input
+          <InputGroup>
+            <Label htmlFor="password">
+              Contraseña
+            </Label>
+            <InputWrapper>
+              <Input
                 id="password"
-                type="password"
+                type={showPassword ? "text" : "password"}
                 autoComplete="current-password"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.password}
+                placeholder="••••••••"
+                {...formik.getFieldProps('password')}
               />
-              {formik.touched.password && formik.errors.password && (
-                <ErrorMessage>{formik.errors.password}</ErrorMessage>
-              )}
-            </FieldWrapper>
-          </FieldsContainer>
+              <IconButton
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+              </IconButton>
+            </InputWrapper>
+            {formik.touched.password && formik.errors.password && (
+              <ErrorText>{formik.errors.password}</ErrorText>
+            )}
+          </InputGroup>
 
-          {error && <ErrorMessage>{error}</ErrorMessage>}
+          <Button type="submit" disabled={isSubmitting}>
+            {isSubmitting ? (
+              <>
+                <span className="animate-spin h-5 w-5 border-2 border-white border-t-transparent rounded-full" />
+                Iniciando sesión...
+              </>
+            ) : (
+              "Iniciar sesión"
+            )}
+          </Button>
+        </Form>
 
-          <SubmitButton type="submit" disabled={isLoading}>
-            {isLoading ? "Cargando..." : "Iniciar sesión"}
-          </SubmitButton>
-        </form>
-      </FormCard>
-    </OuterContainer>
+        <Footer>
+          ¿No tienes una cuenta?{' '}
+          <FooterLink href="/register">
+            Regístrate aquí
+          </FooterLink>
+        </Footer>
+      </Card>
+    </Container>
   );
 }
