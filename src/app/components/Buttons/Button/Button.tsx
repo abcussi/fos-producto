@@ -21,6 +21,8 @@ function Button({
   const variantClasses: { [key: string]: string } = {
     primary: ' fs-14 bg-condatyGreen text-white hover:opacity-[60%] flex items-center justify-center '
            + 'py-2.5 px-[2em] rounded-lg',
+    warn: ' fs-14 bg-black text-white hover:opacity-[60%] flex items-center justify-center '
+    + 'py-2.5 px-[2em] rounded-lg',
     secondary: ' fs-14 bg-white text-gray-placeholder hover:border-condatyGreen flex items-center '
              + ' justify-center py-2.5 px-[2em] rounded-lg border',
     white: ' fs-14 bg-white text-condatyGreen flex items-center justify-center rounded-lg p-[0.5em] '
