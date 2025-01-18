@@ -6,12 +6,12 @@
     "price": 20,
     "category": "Electronics",
     "images": [
-      "/images/product-4.jpeg"
+      "/images/product-4.png"
     ],
     "sellerId": "seller1",
     "condominium": "A1",
     "createdAt": "2023-01-01T00:00:00.000Z",
-    "updatedAt": "2025-01-17T17:27:35.022Z",
+    "updatedAt": "2025-01-18T00:21:47.666Z",
     "existingImage": "/images/product1.png"
   },
   {
