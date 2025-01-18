@@ -22,7 +22,7 @@ const ProductCard = React.memo(
     );
 
     const isNew = useMemo(() => {
-      const createdDate = new Date(product.createdAt);
+      const createdDate = new Date(product.createdAt!);
       const now = new Date();
       const diffTime = Math.abs(now.getTime() - createdDate.getTime());
       const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));

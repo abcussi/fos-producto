@@ -6,7 +6,7 @@ export interface Product {
   description?: string;
   sellerId?: string;
   condominium?: string;
-  images?: string[];
+  images: string[];
   createdAt?: string;
   updatedAt?: string;
 }
