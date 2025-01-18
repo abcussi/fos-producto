@@ -1,0 +1,42 @@
+[
+  {
+    "id": "4",
+    "name": "Test2",
+    "description": "TEst2",
+    "price": 20,
+    "category": "Electronics",
+    "images": [
+      "/images/product-4.jpeg"
+    ],
+    "sellerId": "seller1",
+    "condominium": "A1",
+    "createdAt": "2023-01-01T00:00:00.000Z",
+    "updatedAt": "2025-01-17T17:27:35.022Z",
+    "existingImage": "/images/product1.png"
+  },
+  {
+    "id": "5",
+    "name": "Product 1",
+    "description": "This is product 1",
+    "price": 100,
+    "category": "Electronics",
+    "images": [
+      "/images/product1.png"
+    ],
+    "sellerId": "seller1",
+    "condominium": "A1",
+    "createdAt": "2023-01-01T00:00:00.000Z",
+    "updatedAt": "2023-01-01T00:00:00.000Z"
+  },
+  {
+    "id": "6",
+    "name": "testte",
+    "price": 12,
+    "category": "Door",
+    "images": [
+      "/images/product-1737134932437.jpg"
+    ],
+    "createdAt": "2025-01-17T17:28:52.438Z",
+    "updatedAt": "2025-01-17T17:28:52.438Z"
+  }
+]
